@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://workshop-db1.con4ylkvf0kt.ap-southeast-2.rds.amazonaws.com:5432/postgres
+    username: postgres
+    password: p0stgres##h3llo
+  jpa:
+    hibernate:
+      ddl-auto: update
+hibernate:
+  dialect: postgres

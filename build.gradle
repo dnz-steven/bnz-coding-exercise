@@ -1,0 +1,71 @@
+plugins {
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+}
+
+group = 'nz.co.bnz.lapworkshop'
+version = '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+ext {
+    log4jVersion = "2.20.0"
+    jsonVersion = "20240303"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "io.jsonwebtoken:jjwt-api:0.12.6"
+    implementation "io.jsonwebtoken:jjwt-impl:0.12.6"
+    implementation "io.jsonwebtoken:jjwt-jackson:0.12.6"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+    implementation "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+    implementation "org.apache.logging.log4j:log4j-to-slf4j:${log4jVersion}"
+    implementation "org.postgresql:postgresql:42.7.3"
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation "org.json:json:${jsonVersion}"
+    testImplementation platform("org.junit:junit-bom:5.9.1")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "src/main/java"
+        }
+        resources {
+            srcDir "src/main/resources"
+        }
+    }
+
+    test {
+        java {
+            srcDir "src/test/java"
+        }
+        resources {
+            srcDir "src/test/resources"
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+rootProject.tasks.named("processResources") {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
