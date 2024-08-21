@@ -1,0 +1,121 @@
+openapi: 3.0.3
+info:
+  title: Customer Account API
+  description: API for retrieving customer account information.
+  version: 1.0.0
+servers:
+  - url: /api/v1/customer-account
+    description: Base URL for Customer Account API
+paths:
+  /{customerId}:
+    get:
+      summary: Get Customer Account
+      description: Retrieves the account information for the specified customer ID.
+      operationId: getCustomerAccount
+      tags:
+        - Customer Account
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: The ID of the customer whose account is being retrieved.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Customer account details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerAccount'
+        '403':
+          description: Forbidden. The caller does not have access to the requested data.
+        '500':
+          description: Internal Server Error. An error occurred while processing the request.
+      security:
+        - bearerAuth: []
+  /{customerId}/feedback:
+    post:
+      summary: Add Feedback
+      description: Allows the caller to submit feedback for the specified customer ID.
+      operationId: addFeedback
+      tags:
+        - Feedback
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: The ID of the customer for whom the feedback is being submitted.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+      responses:
+        '201':
+          description: Feedback submitted successfully.
+        '400':
+          description: Bad Request. The request was invalid.
+        '403':
+          description: Forbidden. The caller does not have access to submit feedback.
+        '500':
+          description: Internal Server Error. An error occurred while processing the request.
+      security:
+        - bearerAuth: []
+
+    get:
+      summary: Get Feedback
+      description: Retrieves all feedback submitted for the specified customer ID.
+      operationId: getFeedback
+      tags:
+        - Feedback
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: The ID of the customer whose feedback is being retrieved.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Feedback retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feedback'
+        '403':
+          description: Forbidden. The caller does not have access to retrieve the feedback.
+        '404':
+          description: Not Found. No feedback found for the specified customer ID.
+        '500':
+          description: Internal Server Error. An error occurred while processing the request.
+      security:
+        - bearerAuth: []
+components:
+  schemas:
+    CustomerAccount:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the customer.
+        accountNumber:
+          type: string
+          description: The customer's account number.
+        balance:
+          type: number
+          format: double
+          description: The current balance of the customer's account.
+        status:
+          type: string
+          description: The status of the customer's account.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
