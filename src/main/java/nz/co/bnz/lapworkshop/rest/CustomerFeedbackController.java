@@ -19,7 +19,7 @@ import static nz.co.bnz.lapworkshop.rest.common.RestConstants.*;
 
 @RestController
 @Validated
-@RequestMapping(CUSTOMER_ACCOUNT_CONTROLLER_BASE_PATH)
+@RequestMapping(CUSTOMER_FEEDBACK_CONTROLLER_BASE_PATH)
 public class CustomerAccountController {
 
     private final CustomerAccountService customerAccountService;

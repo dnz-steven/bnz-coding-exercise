@@ -6,14 +6,14 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 @Validated
-public class CustomerAccount {
+public class CustomerFeedback {
 
     private String customerId;
     private List<Account> accounts;
 
     private List<CustomerMovie> movies;
 
-    public CustomerAccount(String customerId) {
+    public CustomerFeedback(String customerId) {
         this.customerId = customerId;
     }
 
