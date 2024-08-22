@@ -14,13 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CustomerFeedbackService {
 
-    private final AccountRepository accountRepository;
+    private final CustomerFeedbackRepository customerFeedbackRepository;
 
     @Autowired
-    public CustomerFeedbackService(AccountRepository accountRepository) {
-        this.movieService = movieService;
-        this.customerAccountMovieMapper = customerAccountMovieMapper;
-        this.accountRepository = accountRepository;
+    public CustomerFeedbackService(CustomerFeedbackRepository customerFeedbackRepository) {
+        this.CustomerFeedbackRepository = customerFeedbackRepository;
     }
 
 }
