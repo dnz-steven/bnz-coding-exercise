@@ -1,43 +1,84 @@
-package nz.co.bnz.lapworkshop.rest.model;
+package co.nz.deloitte.customerfeedback.model;
 
-import nz.co.bnz.lapworkshop.service.movie.model.Movie;
-import org.springframework.validation.annotation.Validated;
-
-import java.util.List;
-
-@Validated
 public class CustomerFeedback {
+    private Long id;
+    private Rating rating;
+    private String comments;
+    private Email email;
 
-    private String customerId;
-    private List<Account> accounts;
+    // Constructors, getters, setters
 
-    private List<CustomerMovie> movies;
 
-    public CustomerFeedback(String customerId) {
-        this.customerId = customerId;
+    // Default constructor
+    public CustomerFeedback() {
     }
 
-    public String getCustomerId() {
-        return customerId;
+    // Parameterized constructor
+    public CustomerFeedback(Long id, Rating rating, String comments, Email email) {
+        this.id = id;
+        this.rating = rating;
+        this.comments = comments;
+        this.email = email;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    // Getter and Setter for id
+    public Long getId() {
+        return id;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    // Getter and Setter for rating
+    public Rating getRating() {
+        return rating;
     }
 
-    public List<CustomerMovie> getMovies() {
-        return movies;
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
-    public void setMovies(List<CustomerMovie> movies) {
-        this.movies = movies;
+    // Getter and Setter for comments
+    public String getComments() {
+        return comments;
     }
-}
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    // Getter and Setter for email
+    public Email getEmail() {
+        return email;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation .*;
+
+import java.util.Optional;
+
+    @RestController
+    @RequestMapping("/feedback")
+    public class CustomerFeedbackController {
+
+        @Autowired
+        private CustomerFeedbackRepository customerFeedbackRepository;
+
+        @PostMapping("/add")
+        public ResponseEntity<CustomerFeedback> addFeedback(@RequestBody CustomerFeedback feedback) {
+            CustomerFeedback savedFeedback = customerFeedbackRepository.save(feedback);
+            return ResponseEntity.ok(savedFeedback);
+        }
+
+        @GetMapping("/{id}")
+        public ResponseEntity<CustomerFeedback> getFeedbackById(@PathVariable Long id) {
+            Optional<CustomerFeedback> feedback = customerFeedbackRepository.findById(id);
+            return feedback.map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        }
+    }

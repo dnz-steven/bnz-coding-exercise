@@ -1,13 +1,11 @@
-package nz.co.bnz.lapworkshop.persistence.repository;
+package co.nz.deloitte.customerfeedback.repository;
 
-import nz.co.bnz.lapworkshop.persistence.repository.entity.AccountEntity;
-import org.springframework.data.domain.Pageable;
+import com.example.demo.model.CustomerFeedback;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-import java.util.UUID;
+public interface CustomerFeedbackRepository extends JpaRepository<CustomerFeedback, Long> {
 
-public interface CustomerFeedbackRepository extends JpaRepository<AccountEntity, UUID> {
+    CustomerFeedback addCustomerFeedback(CustomerFeedback customerFeedback);
 
-    List<AccountEntity> findByType(String type, Pageable pageable);
+    CustomerFeedback getCustomerFeedbackById(Long customerFeedbackId);
 }

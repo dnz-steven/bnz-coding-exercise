@@ -1,24 +1,17 @@
-package nz.co.bnz.lapworkshop.rest.model;
+package co.nz.deloitte.customerfeedback.model;
 
-import nz.co.bnz.lapworkshop.service.movie.model.Movie;
-import org.springframework.validation.annotation.Validated;
-
-import java.util.List;
-
-@Validated
 public class Email {
+    String email;
 
-    private String address;
-
-    public Email() {
-
+    public Email(String email) {
+        this.email = email;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
